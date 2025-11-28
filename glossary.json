@@ -121,9 +121,9 @@
 "párhuzamos képzés":"simultaneous undergraduate studies in two programmes",
 "részképzés":"study in another HEI",
 "specializáció":"specialisation",
-"szabadon választható tantárgy":"optional course-unit",
+"szabadon választható tantárgy":"free elective subject",
 "szak":"programme",
-"szakdolgozat":"degree thesis",
+"szakdolgozat":"bachelor thesis",
 "szakdolgozatvédés":"degree thesis defence",
 "szakirány":"specialisation",
 "szakirányú továbbképzés":"postgraduate specialist training course",
@@ -218,7 +218,6 @@
 "Dr. Charaf Hassan":"Dr. Hassan Charaf",
 "Oktatói Munka Hallgatói Véleményezése":"Education Quality Survey",
 "Európai Felsőoktatási Térség minőségbiztosításának standardjai és irányelvei":"Standards and Guidelines for Quality Assurance in the European Higher Education Area",
-"Tesztelés és üzemeltetés specializáció":"Testing and Operation specialisation ",
 "Mérnökinformatikus Szakbizottság":"Engineering Informatics Programme Committee",
 "Üzemmérnökinformatikus-képzés Szakbizottság":"Computer Science Operational Engineering Programme Committee",
 "Automatizálási és Alkalmazott Informatikai Tanszék":"Department of Automation and Applied Informatics",
@@ -246,7 +245,7 @@
 "szakmai gyakorlat":"internship",
 "Témalabor":"Training Project Laboratory",
 "Komplex írásbeli záróvizsga":"Comprehensive written exam",
-"Szakbizottság":"Computer Science Operational Engineering Programme Committee",
+"Szakbizottság":"Programme Committee",
 "tanulmányi nyilvántartó rendszer":"Study Administration System",
 "TR":"SAS",
 "Tanköri foglalkozás":"University Experience",
@@ -254,6 +253,7 @@
 "Hálózat és biztonság specializáció":"Network and Security specialisation",
 "Adatalapú rendszerek specializáció":"Data Engineering specialisation",
 "Tesztelés és üzemeltetés specializáció":"Test and Operation Engineering specialisation"
+
 
 
 }
