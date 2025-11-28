@@ -1,72 +1,131 @@
-Kapcsolat: [Kővári Bence](kovari.bence@vik.bme.hu) 
+# Fordítás Word-dokumentumokhoz – formázásmegőrzéssel
 
-# Összefoglaló
+[![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/downloads/)
+[![DocuTranslate](https://img.shields.io/badge/Uses-DocuTranslate-0A84FF)](https://github.com/xunbu/docutranslate)
+[![Status](https://img.shields.io/badge/Status-Alpha-orange)](#)
+[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-informational)](#)
 
-Az alábbi útmutató lépésről lépésre leírja, hogyan lehet automatizáltan Word dokumentumokat idegen nyelvre fordítani a formátum megőrzésével.
+Kapcsolat: [Kővári Bence](mailto:kovari.bence@vik.bme.hu)
 
-A fordítás a [docutranslate](https://github.com/xunbu/docutranslate) nevű nyílt forráskódú szoftverrel, és egy szabadon választott MI modellel (pl. GPT 5.1) történik. A fordító az eredeti dokumentumban cseréli le a szövegeket, ezzel megőrzi az eredeti formátumot. 
+---
+## Összefoglaló
 
-A szoftverrel számos egyetemi anyag fordítása automatizálható, de mivel minden dokumentum egyedi, az utólagos emberi átolvasás elengedhetetlen.
+Az útmutató lépésről lépésre bemutatja, hogyan lehet Word-dokumentumokat automatizáltan idegen nyelvre fordítani a formátum megőrzésével.
 
-# Nehézségek
+A fordítás a nyílt forráskódú [DocuTranslate](https://github.com/xunbu/docutranslate) eszközzel és egy tetszőlegesen választott MI modellel történik (pl. OpenAI „gpt-5.1” ). A cél a minél pontosabb, mégis gyors első változat elkészítése; a végső szöveg minősége érdekében az emberi átolvasás továbbra is szükséges.
 
-- Jelenleg nincs egyetemi/kari szinten elfogadott szótár a szakkifejezésekre, a bizottságok neveire és számos más témakörre. Ha hozzájutunk ilyenhez, frissítjük az oldalon.
-- Jelenleg nincs egyetemi állásfoglalás, hogy britt/amerikai angolt használjunk. A szótár egy régi [minisztériumi lista](https://www.nefmi.gov.hu/felsooktatas/dokumentumok/felsooktatasban-gyakran) alapján britt angolt használ 
+> Megjegyzés: Egyetemi anyagok esetében a szakterminológia következetessége kiemelten fontos, ezért elengedhetetlen a saját szótár (glossary) használata.
 
-# Előkészítés
+---
 
-## Python környezet
+## Nehézségek és korlátok
+
+- Jelenleg nincs egyetemi/kari szinten elfogadott szótár a szakkifejezésekre, bizottságok neveire stb. Ha elérhető hivatalos lista, az útmutatót frissítjük.
+- Nincs egységes iránymutatás a brit vs. amerikai angol használatára. A mellékelt szótár egy régi [minisztériumi lista](https://www.nefmi.gov.hu/felsooktatas/dokumentumok/felsooktatasban-gyak...) alapján készült kiindulópontként.
+
+---
+
+## Gyors kezdés
+
+1) Telepítsd a Python-t: [python.org/downloads](https://www.python.org/downloads/)  
+2) Szerezz API kulcsot a választott szolgáltatótól (pl. [OpenAI](https://platform.openai.com/api-keys), [Gemini](https://aistudio.google.com/u/0/apikey)).  
+3) (Opcionális) Egészítsd ki a szótárat: [glossary.xlsx](https://github.com/bmeaut/translation/raw/refs/heads/master/glossary.xlsx).  
+4) Szerkeszd a beállításokat a [translate.py](https://raw.githubusercontent.com/bmeaut/translation/refs/heads/master/translate.py) fájlban (API kulcs, modell, bemeneti/kimeneti fájlok).  
+5) Futtasd a fordítást:
+   ```
+   python translate.py
+   ```
+
+---
+
+## Előkészítés
+
+### Python környezet
 
 Telepítő letöltése, futtatása: [python.org](https://www.python.org/downloads/)
 
-## Fordítóprogram
+### Fordítóprogram
 
-A nyílt forráskódú [docutranslate](https://github.com/xunbu/docutranslate) szoftvert használhjuk. A honlapjukon 3 féle alternatívát is adnak a telepítésre, melyek [itt](https://github.com/xunbu/docutranslate?tab=readme-ov-file#installation) láthatók.
+A nyílt forráskódú [DocuTranslate]([https://github.com/xunbu/docutranslate](https://github.com/xunbu/docutranslate?tab=readme-ov-file#installation)) szoftvert használjuk. A projekt háromféle telepítési lehetőséget ajánl, [részletek a hivatalos oldalon találhatók](https://github.com/xunbu/docutranslate?tab=readme-ov-file#installation).
 
-## API kulcsra
+### API kulcs
 
-A fordításhoz számos nagy nyelvi modell szolgáltatás haszánlható. Érdemes a legfejlettebbek ([openai](https://platform.openai.com/api-keys), [gemini](https://aistudio.google.com/u/0/apikey)) közül választani. A nyelvi modellek használatához előfizetés szükséges, modelltől függően egy 60 oldalas anyag egyszeri lefordítása pár száz forintos tétel lesz. [Regisztrálj valamely szolgáltatónál](https://github.com/xunbu/docutranslate?tab=readme-ov-file#1-get-a-large-model-api-key) és generálj egy API kulcsot.
+A fordításhoz több különböző nagy nyelvi modell szolgáltatás használható. Érdemes a megbízható és fejlett szolgáltatókat választani, például:
+- [OpenAI API](https://platform.openai.com/api-keys)
+- [Google Gemini](https://aistudio.google.com/u/0/apikey)
 
-# Szótár összeállítása
+> Figyelem: Az API kulcsot soha ne oszd meg, és ne töltsd fel verziókezelőbe!
 
-Bár a nyelvi modell nagyon jó az általános szövegek lefordításában, fontos, hogy azokat a kifejezéseket, melyeknek rögzített fordításuk van, helyesen fordítsa le. Ilyenek lehetnek az egyetemi tantárgynevek, bizottságok, szabályzatok angol elnevezései, általános egyetemi szavak (szakdolgozat, docens, vizsgaidőszak stb.) fordításai.
-   
-Nézzük át a fordítandó anyagot, gyűjtsük ki azokat a kifejezéseket, amik problémásak lehetnek. Jó megoldás az is, hogy alapból generáljunk egy fordítást és az angol szöveg átolvasásával azonosísuk azokat a kifejezéseket, melyekre az MI rossz ajánlatot tesz. Fontos, hogy az elnevezések (tanszékek, tárgyak nevei) sokszor elsőre jónak tűnhetnek, de nem feltétlenül egyeznek meg a hivatalos fordítással. Ezeket mindenképp érdemes szótárba felvenni.
+---
 
-A szótárt a rendszer JSON formátumban várja el. Az egyszerűbb szerkeszthetőség érdekében mellékelünk egy minta Excel fájlt is ([glossary.xlsx](https://github.com/bmeaut/translation/raw/refs/heads/master/glossary.xlsx)), mely harmadik oszlopában legenerálja a szótár fájl sorait. Ezt utána egyszerűen bemásolhatjuk a [glossary.json](https://raw.githubusercontent.com/bmeaut/translation/refs/heads/master/glossary.json) fájlba. Másolásnál figyelni kell rá, hogy az utolsó sor után nem kell vessző, illetve a szótárbejegyzések egy nyitó és záró kapcsoszárójel között legyenek.
+## Szótár (glossary) összeállítása
 
-# Fordítás előkészítése
+Bár a nyelvi modellek jók az általános fordításban, a rögzített fordítású kifejezéseket (intézménynevek, szabályzatok, tanszékek, bizottságok, szervezeti egységek) célszerű szótárban meghatározni.
 
-A fordítást a [translate.py](https://raw.githubusercontent.com/bmeaut/translation/refs/heads/master/translate.py) fájl futtatásával fogjuk majd végezni. Futtatás előtt szerkeszzük a fájlt és adjuk meg a következő információkat:
+Javaslat:
+- Nézd át a fordítandó anyagot, és gyűjtsd ki a problémás kifejezéseket.
+- Alternatívaként készíts egy első gépi fordítást, majd az angol változatot átnézve gyűjtsd össze a javítandó terminusokat.
 
-- api_key: API kulcs
-- model_id: csak akkor szükséges változtatni, ha nem az OpenAI gpt-5.1 modelljével dolgoznál
-- uzinfo_mini.docx: ez a forrásfájl, amit le akarunk fordítani. Szükség esetén elérési úttal együtt adjukmeg a sajátunkat.
-- translated_uzinfo_mini.docx: ez a célfájl, amit egy Output mappában létrehoz majd a fordító. A neve mindenképpen térjen el az eredeti fájltól.
+A rendszer JSON formátumú szótárt vár, a szerkesztést pedig megkönnyíti a mellékelt minta Excel: [glossary.xlsx](https://github.com/bmeaut/translation/raw/refs/heads/master/glossary.xlsx)
 
-# Fordítás
+Egyszerű JSON minta:
+```json
+{
+   "Tanulmányi és Vizsgaszabályzat": "Academic and Examination Regulations",
+   "Hallgatói Önkormányzat": "Student Union"
+}
+```
 
-A fordítást a következő paranccsal kezdeményezhetjük:
+> Tipp: Az utolsó tag után nincs vessző
 
-```python
+---
+
+## Fordítás előkészítése
+
+A fordítást a [translate.py](https://raw.githubusercontent.com/bmeaut/translation/refs/heads/master/translate.py) futtatásával végezzük. Futtatás előtt szerkeszd a fájlban található beállításokat:
+
+- `api_key`: a szolgáltatótól kapott API kulcs
+- `model_id`: csak akkor módosítsd, ha nem az alapértelmezett modellt használod (példa: OpenAI „gpt-5.1”)
+- `uzinfo_mini.docx`: a forrásfájl (megadható teljes elérési úttal is)
+- `translated_uzinfo_mini.docx`: a célfájl neve (automatikusan egy `Output` mappába kerül). A név térjen el az eredetitől.
+
+> Tipp: A kimeneti fájlnevet mindig változtasd meg, így nem írja felül a forrást.
+
+---
+
+## Fordítás futtatása
+
+A fordítást a következő paranccsal kezdeményezheted:
+```
 python translate.py
 ```
 
-A fordítás során fura kínai szövegek jelenhetnek meg, ez normális, mivel a program kínai. A fordítás relatíve gyors, gyakorlatilag nagyobb anyagok esetében is néhány másodpercet vesz csak igénybe. A szoftver folyamatosan mutatja hol tart a folyamatban. 
+- A futás során előfordulhat kínai nyelvű napló/üzenet – ez normális, a program eredetileg kínai.
+- A fordítás jellemzően gyors; nagyobb anyagoknál is többnyire másodpercek alatt elkészül az első változat.
 
-Előfordulhat, hogy a folyamat elakad, ez esetben értelmezni kell a hibaüzenetet és reagálni rá. Jellemzően az API hozzáféréssel, vagy magával a Python fájlban megadott konfigurációval van gond.
+> Megjegyzés: Ha a folyamat elakad, az API elérés vagy a konfiguráció (pl. kulcs, modell, jogosultságok) a leggyakoribb ok.
 
-# További tippek
-## git clone
+---
 
-Ezt a projektet klónozhatod kiindulásként, de figyelj rá, hogy API kulcsodat véletlenül se push-old vissza
+## Hibakeresés és tippek
 
-## ESCO
+- Ellenőrizd, hogy a Python verzió megfelel-e (3.9+ ajánlott).
+- Ellenőrizd az API kulcs érvényességét és a szolgáltatói kvótát.
+- Ha a `translate.py` hibaüzenetet ad, olvasd el figyelmesen; tipikusan a konfigurációs érték vagy fájl-elérési út a gond.
 
-Előfordulhatnak olyan elemek, ahol a gépi fordítás nem megfelelő eszköz. Ilyenek például az ESCO kompetenciák a programleírásoknál. Mivel ezeknek hivatalos nevük és leírásuk van mind magyarul, mind angolul, ezért a fordítási folyamatot nem praktikus automatizálni, e helyett 
+### git clone
 
-1. töltsük le a magyar és az angol nyelvű kategórialistát az [ESCO honlapjáról](https://esco.ec.europa.eu/en/use-esco/download)
-2. keressük ki a magyar elnevezésekhez tartozó azonosítókat (pl. [http://data.europa.eu/esco/skill/dc9a236c-c640-43c3-812f-269403591edb](http://data.europa.eu/esco/skill/dc9a236c-c640-43c3-812f-269403591edb))
-3. azonosító alapján keressük ki az angol elnevezéseket és leírásokat
-4. cseréljük a már lefordított dokumentumban a táblázatot
+Ezt a projektet klónozhatod kiindulásként, de ügyelj rá, hogy az API kulcsodat véletlenül se töltsd fel a tárolóba ( `.gitignore`, környezeti változók használata ajánlott).
 
+### ESCO kompetenciák
+
+Vannak esetek, amikor a gépi fordítás nem megfelelő – például az ESCO kompetenciák programleírásokban. Mivel ezeknek hivatalos nevük és leírásuk van, érdemes a hivatalos forrásból dolgozni:
+
+1. Töltsd le a magyar és angol nyelvű kategórialistát az [ESCO honlapjáról](https://esco.ec.europa.eu/en/use-esco/download).  
+2. Keresd ki a magyar elnevezésekhez tartozó azonosítókat (pl. [http://data.europa.eu/esco/skill/dc9a236c-c640-43c3-812f-269403591edb](http://data.europa.eu/esco/skill/dc9a236c-c640-43c3-812f-269403591edb)).  
+3. Azonosító alapján keresd ki az angol elnevezéseket és leírásokat.  
+4. Cseréld a már lefordított dokumentumban a táblázatot a hivatalos angol megfelelőkre.
+
+---
+
+Ha találsz hibát vagy javaslatod van, írj a fenti kapcsolati címen, vagy küldj javaslatot (pull request) a repóhoz. 🙂
