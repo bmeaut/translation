@@ -1,3 +1,5 @@
+Kapcsolat: [Kővári Bence](kovari.bence@vik.bme.hu) 
+
 # Összefoglaló
 
 Az alábbi útmutató lépésről lépésre leírja, hogyan lehet automatizáltan Word dokumentumokat idegen nyelvre fordítani a formátum megőrzésével.
